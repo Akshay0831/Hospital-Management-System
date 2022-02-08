@@ -7,9 +7,6 @@ body{
 .block-body{
   padding: 2em;
 }
-.transparent{
-  background: transparent;
-}
 nav .container-fluid{
   padding: 0.15em 5em
 }
@@ -27,6 +24,11 @@ nav .container-fluid{
 }
 .btn-warning{
   border-color: #198754;
+}
+.btn-danger{
+  border-color: #198754;
+  background-color: #f86977;
+  color: black;
 }
 .btn-primary{
   background-color: #198754;

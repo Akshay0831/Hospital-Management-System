@@ -14,7 +14,7 @@ db = mysql.connector.connect(
 )
 
 
-cursor = db.cursor()
+cursor = db.cursor(buffered=True)
 
 @app.route("/")
 def redirectPg():
@@ -329,7 +329,7 @@ def doctorAdd():
             msg = 'Account already exists !'
         else:
             cursor.execute(f'''INSERT INTO doctor(docMailId, passwd, docName, sex) VALUES ('{docMailId}', '{passwd}', '{docName}', '{sex}') ''')
-            return redirect(url_for('home'))
+            return redirect(url_for('doctors'))
     return render_template("admin/doctorAdd.html", msg=msg, loggedIn=session['loggedIn'] if 'loggedIn' in session else None)
 
 @app.route("/doctorUpdate/<mailId>", methods=['GET', 'POST'])
@@ -435,7 +435,7 @@ def nurseAllocAdd():
             nurseId = request.form['nurseId']
             dateIn = request.form['dateIn']
             dateOut = request.form['dateOut']
-            cursor.execute(f'''SELECT * FROM nursealloc WHERE mailId = '{mailId}' OR AND dateIn BETWEEN '{dateIn}' AND '{dateOut}' ''')
+            cursor.execute(f'''SELECT * FROM nursealloc WHERE mailId = '{mailId}' OR nurseId='{nurseId}' AND dateIn<='{dateIn}' AND dateOut>='{dateOut}' ''')
             allocation = cursor.fetchone()
             if allocation:
                 msg = 'Nurse already allocated!'
@@ -685,7 +685,7 @@ def diagnosisAdd():
             mailId=request.form['mailId']
             testId=request.form['testId']
             testDate=request.form['testDate']
-            analysis=request.form['analysis']
+            analysis=request.form['Analysis']
             cursor.execute(f'''SELECT * FROM diagnosis WHERE mailId = '{mailId}' AND testId = '{testId}' AND testDate = '{testDate}' ''')
             appointment=cursor.fetchone()
             if appointment:
