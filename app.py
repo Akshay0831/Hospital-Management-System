@@ -22,7 +22,7 @@ def redirectPg():
         if session['loggedIn']==1:
             return redirect(url_for('display'))
         elif session['loggedIn']==2:
-            return redirect(url_for('doctorIndex'))
+            return redirect(url_for('doctorDisplay'))
         else:
             return redirect(url_for('patients'))
     return redirect(url_for('login'))
@@ -181,15 +181,9 @@ def doctorLogin():
         if doctor:
             session['loggedIn'] = 2
             session['mailId'] = doctor[0]
-            return redirect(url_for('doctorIndex'))
+            return redirect(url_for('doctorDisplay'))
         msg = 'Incorrect mail-id or password !'
     return render_template('doctorLogin.html', msg = msg)
-
-@app.route("/doctorIndex")
-def doctorIndex():
-    if 'loggedIn' in session:
-        return render_template("doctorIndex.html", loggedIn = session['loggedIn'])
-    return redirect(url_for('doctorLogin'))
 
 @app.route("/doctorDisplay")
 def doctorDisplay():
@@ -214,17 +208,6 @@ def patientRecord():
         record=cursor.fetchall()
         return render_template("patientRecord.html", loggedIn=session['loggedIn'], record=record)
     return redirect(url_for('home'))
-
-@app.route("/selectPatientforRecord",methods=['GET','POST'])
-def selectPatientforRecord():
-    msg=" "
-    if 'loggedIn' in session:
-        if request.method=="POST":
-            session['patMailId']=request.form['mailId']
-            return redirect(url_for('patientRecord'))
-        else:
-            return render_template("selectPatientforRecord.html", loggedIn=session['loggedIn'], msg=msg)
-    return render_template('doctorIndex.html')
 
 @app.route("/docAppointments",methods=['GET','POST'])
 def docAppointments():

@@ -18,7 +18,7 @@
           {% if loggedIn==1 %}
           <a class="navbar-brand" href="{{url_for('display')}}"> Hospital</a>
           {% elif loggedIn==2 %}
-          <a class="navbar-brand" href="{{url_for('doctorIndex')}}"> Hospital</a>
+          <a class="navbar-brand" href="{{url_for('doctorDisplay')}}"> Hospital</a>
           {% elif loggedIn==3 %}
           <a class="navbar-brand" href="{{url_for('patients')}}"> Hospital</a>
           {% else %}
