@@ -18,6 +18,25 @@ nav .container-fluid{
   background-color: white;
   border-color: green;
 }
+.card-header{
+  background-color: #198754;
+  color: white;
+}
+.card-body{
+  background-color: rgba(25, 135, 84, 0.1)
+}
+.btn-warning{
+  border-color: #198754;
+}
+.btn-primary{
+  background-color: #198754;
+}
+.form-check-input:focus{
+  background-color: #198754;
+}
+.form-check-input:checked{
+  background-color: #198754;
+}
 /*
 .bi-plus-lg {
   color: white;
