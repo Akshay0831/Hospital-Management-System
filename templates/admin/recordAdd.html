@@ -16,6 +16,17 @@
                         {% endfor %}
                     </select>
                 </div>
+                {% if loggedIn!=2 %}
+                <div class="mb-3 col">
+                    <label for="docMailId" class="form-label">Doctor</label>
+                    <select class="form-select" id="docMailId" name="docMailId" required>
+                        <option value="">Select Doctor</option>
+                        {% for doctor in doctors %}
+                        <option value="{{doctor[0]}}">{{doctor[1]}} ({{doctor[0]}})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endif %}
                 <div class="mb-3 col">
                     <label for="Analysis" class="form-label">Analysis</label>
                     <textarea name="Analysis" id="Analysis" placeholder="Enter Report Data" class="form-control" rows="4" required></textarea>

@@ -10,17 +10,19 @@
                 <thead>
                     <tr>
                         <th>Patient Id</th>
+                        <th>Doctor Id</th>
                         <th>Report</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for record in records %}
                     <tr>
-                        <td>{{record[0]}}</td>
+                        <td>{{record[1]}}</td>
+                        <td>{{record[3]}}</td>
                         <td>{{record[2]}}</td>
                         <td>
-                            <a href="/recordUpdate/{{record[1]}}" class="btn btn-warning">Update</a>
-                            <a href="/recordDelete/{{record[1]}}" class="btn btn-danger">Delete</a>
+                            <a href="/recordUpdate/{{record[0]}}" class="btn btn-warning">Update</a>
+                            <a href="/recordDelete/{{record[0]}}" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                     {% endfor %}

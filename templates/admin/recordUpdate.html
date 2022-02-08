@@ -5,14 +5,23 @@
             <h2>Update Record</h2>
         </div>
         <div class="card-body">
-            <form action="{{record[1]}}" method="post" autocomplete="off">
+            <form action="{{record[0]}}" method="post" autocomplete="off">
                 <div class="msg">{{ msg }}</div>
                 <div class="mb-3 col">
                     <label for="mailId" class="form-label">Patient</label>
                     <select class="form-select" id="mailId" name="mailId" required>
-                        <option value="{{record[0]}}">{{record[0]}}</option>
+                        <option value="{{record[1]}}">{{record[1]}}</option>
                         {% for patient in patients %}
                         <option value="{{patient[0]}}">{{patient[0]}} ({{patient[1]}})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3 col">
+                    <label for="docMailId" class="form-label">Doctor</label>
+                    <select class="form-select" id="docMailId" name="docMailId" required>
+                        <option value="{{record[3]}}">{{record[3]}}</option>
+                        {% for doctor in doctors %}
+                        <option value="{{doctor[0]}}">{{doctor[1]}} ({{doctor[0]}})</option>
                         {% endfor %}
                     </select>
                 </div>

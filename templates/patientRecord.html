@@ -10,10 +10,10 @@
         {% for rec in record %}
         <div class="card shadow m-1 bg-body rounded">
             <div class="card-body">
-                <h5 class="card-title">Record :  {{rec[1]}} </h5>
-                <div class="card-subtitle mb-2 text-muted">{{rec[0]}} </div>
+                <h3 class="card-title">{{rec[0]}}</h3>
+                <div class="card-title mb-2 text-muted">{{rec[1]}} ({{rec[2]}})</div>
                 <hr>
-                <div class="card-text"><h6>Record Analysis :</h6> {{rec[2]}} </div>
+               <div class="card-text"><h6>Record Analysis :</h6> {{rec[3]}} </div>
             </div>
         </div>
         {% endfor %}

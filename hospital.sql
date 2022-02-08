@@ -55,12 +55,14 @@ FOREIGN KEY (medicineId) REFERENCES medicine(medicineId) ON DELETE CASCADE,
 FOREIGN KEY (mailId) REFERENCES patient(mailId) ON DELETE CASCADE
 );
 
+/*
 CREATE TABLE specialization(
 docMailId varchar(20) NOT NULL,
 specialization varchar(6) NOT NULL,
 PRIMARY KEY(docMailId, specialization),
 FOREIGN KEY(docMailId) REFERENCES doctor(docMailId) ON DELETE CASCADE
 );
+*/
 
 CREATE TABLE nurse(
 nurseId varchar(20) PRIMARY KEY,
@@ -83,7 +85,7 @@ CREATE TABLE record(
 recordId int auto_increment PRIMARY KEY,
 mailId varchar(20) NOT NULL,
 Analysis text,
-docMailId varchar(20),
+docMailId varchar(20) NOT NULL,
 FOREIGN KEY (mailId) REFERENCES patient(mailId) ON DELETE CASCADE,
 FOREIGN KEY(docMailId) REFERENCES doctor(docMailId) ON DELETE CASCADE
 );
@@ -178,7 +180,5 @@ VALUES
   (5, 'Sugar', 'Blood');
 
 INSERT INTO record VALUES
-  ('0@gmail.com', 1, 'The Patient is fine'),
-  ('1@gmail.com', 2, 'The Patient Physically fine, but requires psychological therapy');
-
-select * from nurseAlloc;
+  (1, '0@gmail.com', 'The Patient is fine', 'dr1@gmail.com'),
+  (2, '1@gmail.com', 'The Patient Physically fine, but requires psychological therapy', 'dr2@gmail.com');
