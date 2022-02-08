@@ -1,4 +1,88 @@
-{% block dashboard %}
+{% if loggedIn==3 %}
+<div class="col-md-3">
+<div class="card shadow mb-5 bg-body rounded">
+  <div class="card-header">Admin Dashboard</div>
+  <div class="card-body gap-2 d-grid">
+    <div class="btn-group">
+      <a class="btn btn-success" href="{{url_for('patients')}}" style="width: 100%;">Patients</a>
+      <a class="btn btn-warning" href="{{url_for('patientAdd')}}"><i class="bi bi-plus-lg"></i></a>
+    </div>
+    <div class="btn-group">
+      <a class="btn btn-success" href="{{url_for('doctors')}}" style="width: 100%;">Doctors</a>
+      <a class="btn btn-warning" href="{{url_for('doctorAdd')}}"><i class="bi bi-plus-lg"></i></a>
+    </div>
+    <div class="btn-group-vertical">
+      <div class="btn-group">
+        <a class="btn btn-success" href="{{url_for('nurses')}}" style="width: 100%;">Nurses</a>
+        <a class="btn btn-warning" href="{{url_for('nurseAdd')}}"><i class="bi bi-plus-lg"></i></a>
+      </div>
+      <div class="btn-group">
+        <a class="btn btn-secondary" href="{{url_for('nurseAlloc')}}" style="width: 100%;">Nurse Allocation</a>
+        <a class="btn btn-warning" href="{{url_for('nurseAllocAdd')}}"><i class="bi bi-plus-lg"></i></a>
+      </div>
+    </div>
+    <div class="btn-group">
+      <a class="btn btn-success" href="{{url_for('records')}}" style="width: 100%;">Records</a>
+      <a class="btn btn-warning" href="{{url_for('recordAdd')}}"><i class="bi bi-plus-lg"></i></a>
+    </div>
+    <div class="btn-group">
+      <a class="btn btn-success" href="{{url_for('appointments')}}" style="width: 100%;">Appointments</a>
+      <a class="btn btn-warning" href="{{url_for('appointmentAdd')}}"><i class="bi bi-plus-lg"></i></a>
+    </div>
+    <div class="btn-group-vertical">
+      <div class="btn-group">
+        <a class="btn btn-success" href="{{url_for('tests')}}" style="width: 100%;">Tests</a>
+        <a class="btn btn-warning" href="{{url_for('testAdd')}}"><i class="bi bi-plus-lg"></i></a>
+      </div>
+      <div class="btn-group">
+        <a class="btn btn-secondary" href="{{url_for('diagnosis')}}" style="width: 100%;">Diagnosis</a>
+        <a class="btn btn-warning" href="{{url_for('diagnosisAdd')}}"><i class="bi bi-plus-lg"></i></a>
+      </div>
+    </div>
+    <div class="btn-group-vertical">
+      <div class="btn-group">
+        <a class="btn btn-success" href="{{url_for('medicines')}}" style="width: 100%;">Medicines</a>
+      </div>
+      <div class="btn-group">
+        <a class="btn btn-secondary" href="{{url_for('dosages')}}" style="width: 100%;">Dosage</a>
+        <a class="btn btn-warning" href="{{url_for('dosageAdd')}}"><i class="bi bi-plus-lg"></i></a>
+      </div>
+    </div>
+    <div class="btn-group-vertical">
+      <a class="btn btn-success" href="{{url_for('adminDisplay')}}">View Profile</a>
+      <a class="btn btn-secondary" href="{{url_for('adminUpdate')}}">Update Profile</a>
+    </div>
+    <a class="btn btn-success" href="{{url_for('logout')}}">Logout</a>
+  </div>
+</div>
+</div>
+{% elif loggedIn==2 %}
+<div class="col-md-3">
+    <div class="card shadow mb-5 bg-body rounded">
+        <div class="card-header">Doctor Dashboard</div>
+        <div class="card-body gap-2 d-grid">
+            <div class="btn-group">
+                <a class="btn btn-success" href="{{url_for('doctorDisplay')}}" style="width: 100%;">Profile</a>
+                <a class="btn btn-warning" href="{{url_for('doctorUpdate')}}"><i class="bi bi-pencil-fill"></i></a>
+            </div>
+            <a class="btn btn-success" href="{{url_for('appointments')}}">Appointments</a>
+            <div class="btn-group">
+                <a class="btn btn-success" href="{{url_for('records')}}" style="width: 100%">Records</a>
+                <a class="btn btn-warning" href="{{url_for('recordAdd')}}"><i class="bi bi-plus-lg"></i></a>
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-success" href="{{url_for('diagnosis')}}" style="width: 100%">Test Reports</a>
+                <a class="btn btn-warning" href="{{url_for('diagnosisAdd')}}"><i class="bi bi-plus-lg"></i></a>
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-success" href="{{url_for('dosages')}}" style="width: 100%">Dosages</a>
+                <a class="btn btn-warning" href="{{url_for('dosageAdd')}}"><i class="bi bi-plus-lg"></i></a>
+            </div>
+            <a class="btn btn-success" href="{{url_for('logout')}}">Logout</a>
+        </div>
+    </div>
+</div>
+{% elif loggedIn==1 %}
 <div class="col-md-3">
     <div class="card shadow mb-5 bg-body rounded">
         <div class="card-header">Patient Dashboard</div>
@@ -18,4 +102,4 @@
         </div>
     </div>
 </div>
-{% endblock dashboard %}
+{% endif %}

@@ -56,7 +56,7 @@
               </a>
               {% if loggedIn == 1 %}
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="{{url_for('appointmentAdd')}}">Make Appointment</a></li>
+                <li><a class="dropdown-item" href="{{url_for('appointmentAdd')}}">Book an Appointment</a></li>
                 <li><a class="dropdown-item" href="{{url_for('appointments')}}">My Appointments</a></li>
                 <li><a class="dropdown-item" href="{{url_for('myRecords')}}">My Records</a></li>
                 <li><a class="dropdown-item" href="{{url_for('diagnosis')}}">My Test Reports</a></li>
@@ -69,16 +69,29 @@
               </ul>
               {% elif loggedIn == 2 %}
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{{url_for('appointments')}}">Appointments</a></li>
+                <li><a class="dropdown-item" href="{{url_for('records')}}">Patient Records</a></li>
+                <li><a class="dropdown-item" href="{{url_for('diagnosis')}}">Patient Test Reports</a></li>
+                <li><a class="dropdown-item" href="{{url_for('dosages')}}">Patient Prescriptions</a></li>
+                <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="{{url_for('doctorDisplay')}}">Display</a></li>
                 <li><a class="dropdown-item" href="{{url_for('doctorUpdate')}}">Update</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{{url_for('nurseAlloc')}}">Allocate Nurse</a></li>
-                <li><a class="dropdown-item" href="{{url_for('selectPatientforRecord')}}">View Patient Record</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="{{url_for('logout')}}">Logout</a></li>
               </ul>
               {% elif loggedIn == 3 %}
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{{url_for('patients')}}">Patients</a></li>
+                <li><a class="dropdown-item" href="{{url_for('doctors')}}">Doctors</a></li>
+                <li><a class="dropdown-item" href="{{url_for('nurses')}}">Nurses</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{url_for('appointments')}}">Appointments</a></li>
+                <li><a class="dropdown-item" href="{{url_for('records')}}">Records</a></li>
+                <li><a class="dropdown-item" href="{{url_for('tests')}}">Tests</a></li>
+                <li><a class="dropdown-item" href="{{url_for('diagnosis')}}">Diagnosis</a></li>
+                <li><a class="dropdown-item" href="{{url_for('medicines')}}">Medicines</a></li>
+                <li><a class="dropdown-item" href="{{url_for('dosages')}}">Dosages</a></li>
+                <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="{{url_for('adminDisplay')}}">Display</a></li>
                 <li><a class="dropdown-item" href="{{url_for('adminUpdate')}}">Update</a></li>
                 <li><hr class="dropdown-divider"></li>
@@ -92,13 +105,7 @@
       </nav>
     <div class="container-fluid">
       <div class="block-body row">
-        {% if loggedIn==3 %}
-          {% include 'admin/adminDashboard.html' %}
-        {% elif loggedIn==2 %}
-          {% include 'doctorDashboard.html' %}
-        {% elif loggedIn==1 %}
-          {% include 'dashboard.html' %}
-        {% endif %}
+        {% include 'dashboard.html' %}
         <div class="col">
         {% block body %}
         {% endblock %}
