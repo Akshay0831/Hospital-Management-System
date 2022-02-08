@@ -778,17 +778,17 @@ def medicineDelete(medicineId):
 def dosages():
     if 'loggedIn' not in session:
         return redirect(url_for('home'))
-    if session['loggedIn']==3:
-        cursor.execute(f'''SELECT * FROM dosage ''')
-    else:
+    if session['loggedIn']==1:
         cursor.execute(f'''SELECT * FROM dosage WHERE mailId='{session['mailId']}' ''')
+    else:
+        cursor.execute(f'''SELECT * FROM dosage ''')
     dosages=cursor.fetchall()
     return render_template("admin/dosages.html", loggedIn=session['loggedIn'], dosages=dosages)
 
 @app.route("/dosageAdd",methods=["GET","POST"])
 def dosageAdd():
     msg=''
-    if 'loggedIn' in session and session['loggedIn']==3:
+    if 'loggedIn' in session and session['loggedIn']>=2:
         if request.method=='POST':
             mailId=request.form['mailId']
             medicineId=request.form['medicineId']

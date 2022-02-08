@@ -16,7 +16,10 @@
                 <a class="btn btn-success" href="{{url_for('diagnosis')}}" style="width: 100%">Test Reports</a>
                 <a class="btn btn-warning" href="{{url_for('diagnosisAdd')}}"><i class="bi bi-plus-lg"></i></a>
             </div>
-            <a class="btn btn-success" href="{{url_for('dosages')}}">Dosages</a>
+            <div class="btn-group">
+                <a class="btn btn-success" href="{{url_for('dosages')}}" style="width: 100%">Dosages</a>
+                <a class="btn btn-warning" href="{{url_for('dosageAdd')}}"><i class="bi bi-plus-lg"></i></a>
+            </div>
             <a class="btn btn-success" href="{{url_for('logout')}}">Logout</a>
         </div>
     </div>
