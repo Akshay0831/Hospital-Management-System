@@ -202,9 +202,9 @@ def doctorDisplay():
 @app.route("/myRecords",methods=['GET','POST'])
 def myRecords():
     if 'loggedIn' in session:
-        cursor.execute(f'''SELECT * FROM record WHERE mailId = '{session['mailId']}' ''')
-        record = cursor.fetchall()
-        return render_template("patientRecord.html", loggedIn=session['loggedIn'], record = record)
+        cursor.execute(f'''SELECT recordId, docName, R.docMailId, Analysis FROM record R, doctor D WHERE R.docMailId=D.docMailId AND mailId = '{session['mailId']}' ''')
+        records = cursor.fetchall()
+        return render_template("patientRecord.html", loggedIn=session['loggedIn'], record = records)
     return redirect(url_for('login'))
 
 @app.route("/patientRecord",methods=['GET','POST'])
@@ -574,51 +574,63 @@ def appointmentDelete(args):
 #Admin Records Methods
 @app.route("/records", methods=['GET', 'POST'])
 def records():
-    if 'loggedIn' not in session or session['loggedIn']!=3:
+    if 'loggedIn' not in session or session['loggedIn']==1:
         return redirect(url_for('home'))
-    cursor.execute(f'''SELECT * FROM record ''')
+    if session['loggedIn']==2:
+        cursor.execute(f'''SELECT * FROM record WHERE docMailId = '{session['mailId']}' ''')
+    else:
+        cursor.execute(f'''SELECT * FROM record ''')
     records=cursor.fetchall()
     return render_template("admin/records.html", loggedIn=session['loggedIn'], records=records)
 
 @app.route("/recordAdd", methods=['GET', 'POST'])
 def recordAdd():
-    if 'loggedIn' in session and session['loggedIn']==3:
+    if 'loggedIn' in session and session['loggedIn']>=2:
         if request.method=='POST':
             mailId=request.form['mailId']
             Analysis=request.form['Analysis']
-            cursor.execute(f'''INSERT INTO record(mailId, Analysis) VALUES('{mailId}','{Analysis}')''')
+            if session['loggedIn']!=2:
+                docMailId=request.form['docMailId']
+            else:
+                docMailId=session['mailId']
+            cursor.execute(f'''INSERT INTO record(mailId, Analysis, docMailId) VALUES('{mailId}','{Analysis}','{docMailId}')''')
             return redirect(url_for('records'))
         cursor.execute(f'''SELECT mailId, Pname FROM patient ''')
         patients = cursor.fetchall()
-        return render_template('admin/recordAdd.html', patients=patients, loggedIn=session['loggedIn'])
+        cursor.execute(f'''SELECT docMailId, docName FROM doctor ''')
+        doctors = cursor.fetchall()
+        return render_template('admin/recordAdd.html', doctors=doctors, patients=patients, loggedIn=session['loggedIn'])
     return redirect(url_for('home'))
 
 
 @app.route("/recordUpdate/<recordId>", methods=['GET', 'POST'])
 def recordUpdate(recordId):
-    if 'loggedIn' not in session or session['loggedIn']!=3:
+    if 'loggedIn' not in session or session['loggedIn']==1:
         return redirect(url_for('home'))
     msg = ''
     if request.method == 'POST':
             mailId = request.form['mailId']
+            docMailId = request.form['docMailId']
             Analysis = request.form['Analysis']
             cursor.execute(f'''SELECT * FROM record WHERE recordId = '{recordId}' ''')
             record = cursor.fetchone()
             if record and record[1]!=recordId:
                 msg = 'Record-Id already in use!'
             else:
-                cursor.execute(f'''UPDATE record SET mailId = '{mailId}', Analysis = '{Analysis}' WHERE recordId = '{recordId}' ''')
+                cursor.execute(f'''UPDATE record SET mailId = '{mailId}', Analysis = '{Analysis}', docMailId = '{docMailId}' WHERE recordId = '{recordId}' ''')
             return redirect(url_for('records'))
     else:
         cursor.execute(f"SELECT * FROM record WHERE recordId = '{recordId}'")
         record = cursor.fetchone()
-        cursor.execute(f'''SELECT mailId, Pname FROM patient WHERE mailId <> (SELECT mailId FROM record WHERE recordId='{recordId}') ''')
+        cursor.execute(f'''SELECT mailId, Pname FROM patient ''')
         patients = cursor.fetchall()
-        return render_template("admin/recordUpdate.html", patients=patients, record=record, loggedIn = session['loggedIn'], msg=msg)
+        cursor.execute(f'''SELECT docMailId, docName FROM doctor ''')
+        doctors = cursor.fetchall()
+        return render_template("admin/recordUpdate.html", doctors=doctors, patients=patients, record=record, loggedIn = session['loggedIn'], msg=msg)
 
 @app.route("/recordDelete/<recordId>")
 def recordDelete(recordId):
-    if 'loggedIn' not in session or session['loggedIn']!=3:
+    if 'loggedIn' not in session or session['loggedIn']==1:
         return redirect(url_for('home'))
     cursor.execute(f'''DELETE FROM record WHERE recordId = '{recordId}' ''')
     return redirect(url_for('records'))
