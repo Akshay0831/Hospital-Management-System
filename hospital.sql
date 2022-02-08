@@ -80,10 +80,12 @@ FOREIGN KEY (nurseId) REFERENCES nurse(nurseId) ON DELETE CASCADE
 );
 
 CREATE TABLE record(
-mailId varchar(20) NOT NULL,
 recordId int auto_increment PRIMARY KEY,
+mailId varchar(20) NOT NULL,
 Analysis text,
-FOREIGN KEY (mailId) REFERENCES patient(mailId) ON DELETE CASCADE
+docMailId varchar(20),
+FOREIGN KEY (mailId) REFERENCES patient(mailId) ON DELETE CASCADE,
+FOREIGN KEY(docMailId) REFERENCES doctor(docMailId) ON DELETE CASCADE
 );
 
 CREATE TABLE test(

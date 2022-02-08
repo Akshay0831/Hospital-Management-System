@@ -92,9 +92,11 @@
       </nav>
     <div class="container-fluid">
       <div class="block-body row">
-        {% if loggedIn and loggedIn==3 %}
+        {% if loggedIn==3 %}
           {% include 'admin/adminDashboard.html' %}
-        {% elif loggedIn %}
+        {% elif loggedIn==2 %}
+          {% include 'doctorDashboard.html' %}
+        {% elif loggedIn==1 %}
           {% include 'dashboard.html' %}
         {% endif %}
         <div class="col">

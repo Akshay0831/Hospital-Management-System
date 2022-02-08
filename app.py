@@ -505,10 +505,10 @@ def nurseAllocDelete(args):
 def appointments():
     if 'loggedIn' not in session:
         return redirect(url_for('home'))
-    if session['loggedIn']==1:
-        cursor.execute(f'''SELECT * FROM appointment WHERE mailId = '{session['mailId']}' ''')
-    else:
+    if session['loggedIn']==3:
         cursor.execute(f'''SELECT * FROM appointment ''')
+    else:
+        cursor.execute(f'''SELECT * FROM appointment WHERE {'mailId' if session['loggedIn']==1 else 'docMailId'} = '{session['mailId']}' ''')
     appointments=cursor.fetchall()
     return render_template("admin/appointments.html", loggedIn=session['loggedIn'], appointments=appointments)
 
@@ -675,17 +675,17 @@ def testDelete(testId):
 def diagnosis():
     if 'loggedIn' not in session:
         return redirect(url_for('home'))
-    if session['loggedIn']==3:
-        cursor.execute(f'''SELECT * FROM diagnosis ''')
-    else:
+    if session['loggedIn']==1:
         cursor.execute(f'''SELECT * FROM diagnosis WHERE mailId = '{session['mailId']}' ''')
+    else:
+        cursor.execute(f'''SELECT * FROM diagnosis ''')
     diagnosis=cursor.fetchall()
     return render_template("admin/diagnosis.html", loggedIn=session['loggedIn'], diagnosis=diagnosis)
 
 @app.route("/diagnosisAdd", methods=['GET', 'POST'])
 def diagnosisAdd():
     msg=''
-    if 'loggedIn' in session and session['loggedIn']==3:
+    if 'loggedIn' in session and session['loggedIn']>=2:
         if request.method=='POST':
             mailId=request.form['mailId']
             testId=request.form['testId']
