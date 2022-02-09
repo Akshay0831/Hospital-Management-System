@@ -196,7 +196,7 @@ def doctorDisplay():
 @app.route("/myRecords",methods=['GET','POST'])
 def myRecords():
     if 'loggedIn' in session:
-        cursor.execute(f'''SELECT recordId, docName, R.docMailId, Analysis FROM record R, doctor D WHERE R.docMailId=D.docMailId AND mailId = '{session['mailId']}' ''')
+        cursor.execute(f'''SELECT * FROM v_detailedRecords WHERE mailId = '{session['mailId']}' ''')
         records = cursor.fetchall()
         return render_template("patientRecord.html", loggedIn=session['loggedIn'], record = records)
     return redirect(url_for('login'))
@@ -560,9 +560,9 @@ def records():
     if 'loggedIn' not in session or session['loggedIn']==1:
         return redirect(url_for('home'))
     if session['loggedIn']==2:
-        cursor.execute(f'''SELECT * FROM record WHERE docMailId = '{session['mailId']}' ''')
+        cursor.execute(f'''SELECT * FROM v_detailedRecords WHERE docMailId = '{session['mailId']}' ''')
     else:
-        cursor.execute(f'''SELECT * FROM record ''')
+        cursor.execute(f'''SELECT * FROM v_detailedRecords ''')
     records=cursor.fetchall()
     return render_template("admin/records.html", loggedIn=session['loggedIn'], records=records)
 

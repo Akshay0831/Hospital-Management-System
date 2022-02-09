@@ -11,9 +11,10 @@
         <div class="card shadow m-1 bg-body rounded">
             <div class="card-body">
                 <h3 class="card-title">{{rec[0]}}</h3>
-                <div class="card-title mb-2 text-muted">{{rec[1]}} ({{rec[2]}})</div>
+                <div class="card-title mb-2">Dr. {{rec[3]}} ({{rec[4]}})</div>
+                <div class="card-subtitle mb-2 text-muted">Patient Name: {{rec[1]}} ({{rec[2]}})</div>
                 <hr>
-               <div class="card-text"><h6>Record Analysis :</h6> {{rec[3]}} </div>
+               <div class="card-text"><h6>Record Analysis :</h6> {{rec[5]}} </div>
             </div>
         </div>
         {% endfor %}
