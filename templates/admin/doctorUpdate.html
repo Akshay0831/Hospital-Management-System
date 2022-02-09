@@ -6,18 +6,17 @@
         </div>
         <div class="card-body">
             <form action="{{doctor[0]}}" method="post" autocomplete="off">
-                <div class="msg">{{ msg }}</div>
                 <div class="mb-3 col">
                     <label for="docMailId" class="form-label">Doctor Id</label>
-                    <input type="email" name="docMailId" value="{{doctor[0]}}" placeholder="Enter mail-id" class="form-control" id="docMailId" required>
+                    <input type="email" name="docMailId" value="{{doctor[0]}}" placeholder="Enter mail-id" maxlength="30" class="form-control" id="docMailId" required>
                 </div>
                 <div class="mb-3 col">
                     <label for="passwd" class="form-label">Password</label>
-                    <input type="password" name="passwd" placeholder="Enter Password" class="form-control" id="passwd" value="{{doctor[1]}}" required>
+                    <input type="password" name="passwd" placeholder="Enter Password" class="form-control" maxlength="30" id="passwd" value="{{doctor[1]}}" required>
                 </div>
                 <div class="mb-3 col">
                     <label for="docName" class="form-label">Name</label>
-                    <input type="text" name="docName" placeholder="Enter name" class="form-control" id="docName" value="{{doctor[2]}}" required>
+                    <input type="text" name="docName" placeholder="Enter name" class="form-control" maxlength="30" id="docName" value="{{doctor[2]}}" required>
                 </div>
                 <div class="mb-3 col">
                     <label for="sex" class="form-label">Sex</label>

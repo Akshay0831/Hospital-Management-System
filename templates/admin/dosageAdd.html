@@ -6,7 +6,6 @@
     </div>
     <div class="card-body">
       <form action="{{url_for('dosageAdd')}}" method="POST" autocomplete="OFF">
-        <div class="msg">{{msg}}</div>
         <div class="mb-3">
           <label for="mailId" class="form-label">Patient</label>
           <select class="form-select" id="mailId" name="mailId" required>
@@ -27,7 +26,7 @@
         </div>
         <div class="mb-3">
           <label for="quantity" class="form-label">Quantity</label>
-          <input type="number" name="quantity" placeholder="Enter quantity" class="form-control" id="quantity" required>
+          <input type="number" name="quantity" placeholder="Enter quantity" class="form-control" id="quantity" min="1" max="5000" required>
         </div>
         <div class="mb-3">
           <label for="doseDate" class="form-label">Date</label>

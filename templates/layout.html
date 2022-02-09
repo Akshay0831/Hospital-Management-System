@@ -39,11 +39,6 @@
               <li class="nav-item">
                 <a class="nav-link disabled">Contact Us</a>
               </li>
-              {% if loggedIn==1 %}
-              <li class="nav-item">
-                <a class="nav-link" href="{{url_for('records')}}">Records</a>
-              </li>
-              {% endif %}
             </ul>
             {% if not loggedIn %}
             <div class="nav-item">
@@ -112,6 +107,9 @@
         <div class="col">
         {% block body %}
         {% endblock %}
+        {% if msg %}
+          <div class="alert alert-danger" role="alert">{{ msg }}</div>
+        {% endif %}
         </div>
       </div>
     </div>

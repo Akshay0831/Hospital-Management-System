@@ -6,14 +6,13 @@
         </div>
         <div class="card-body">
             <form action="{{test[0]}}" method="post" autocomplete="off">
-                <div class="msg">{{ msg }}</div>
                 <div class="mb-3 col">
                     <label for="testName" class="form-label">Test Name</label>
-                    <input type="email" name="testName" value="{{test[1]}}" placeholder="Enter mail-id" class="form-control" id="testName" required>
+                    <input type="email" name="testName" value="{{test[1]}}" placeholder="Enter mail-id" maxlength="30" class="form-control" id="testName" required>
                 </div>
                 <div class="mb-3 col">
                     <label for="testCategory" class="form-label">Test Category</label>
-                    <input type="text" name="testCategory" placeholder="Enter Report Data" class="form-control" id="testCategory" value="{{test[2]}}" required>
+                    <input type="text" name="testCategory" value="{{test[2]}}" placeholder="Enter Report Data" maxlength="30" class="form-control" id="testCategory" required>
                 </div>
                 <button type="submit" class="btn btn-success">Update</button>
                 <a class="btn btn-success" href="{{url_for('tests')}}">Home</a>

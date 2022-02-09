@@ -6,7 +6,6 @@
         </div>
         <div class="card-body">
             <form action="{{ url_for('nurseAllocAdd')}}" method="post" autocomplete="off">
-                <div class="form-text">{{ msg }}</div>
                 <div class="mb-3 col">
                     <label for="mailId" class="form-label">Patient</label>
                     <select class="form-select" id="mailId" name="mailId" required>
@@ -28,11 +27,11 @@
                 <div class="row">
                     <div class="mb-3 col">
                         <label for="dateIn" class="form-label">Start Date</label>
-                        <input type="date" name="dateIn" placeholder="Enter Start Date" class="form-control" id="dateIn" required>
+                        <input type="date" name="dateIn" placeholder="Enter Start Date" class="form-control" id="dateIn" onchange="document.getElementById('dateOut').min=this.value" required>
                     </div>
                     <div class="mb-3 col">
                         <label for="dateOut" class="form-label">End Date</label>
-                        <input type="date" name="dateOut" placeholder="Enter End Date" class="form-control" id="dateOut" required>
+                        <input type="date" name="dateOut" placeholder="Enter End Date" class="form-control" id="dateOut" onchange="document.getElementById('dateIn').max=this.value" required>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Allocate</button>

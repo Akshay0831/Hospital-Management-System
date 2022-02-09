@@ -4,18 +4,17 @@
     <div class="card-body">
         <form action="{{ url_for('register')}}" method="post" autocomplete="off">
             <legend><h2>Register Patient</h2></legend>
-            <div class="form-text">{{ msg }}</div>
             <div class="mb-3">
                 <label for="PName" class="form-label">Name</label>
-                <input class="form-control" type="text" name="PName" placeholder="Enter Your name" id="PName" required>
+                <input class="form-control" type="text" name="PName" placeholder="Enter Your name" maxlength="30" id="PName" required>
             </div>
             <div class="mb-3">
                 <label for="mailId" class="form-label">Email-Id</label>
-                <input class="form-control" type="email" name="mailId" placeholder="Enter Your Email ID" id="mailId" required>
+                <input class="form-control" type="email" name="mailId" placeholder="Enter Your Email ID" maxlength="30" id="mailId" required>
             </div>
             <div class="mb-3">
                 <label for="passwd" class="form-label">Password</label>
-                <input class="form-control" type="password" name="passwd" placeholder="Enter Your Password" id="passwd" required>
+                <input class="form-control" type="password" name="passwd" placeholder="Enter Your Password" maxlength="30" id="passwd" required>
             </div>
             <div class="row">
                 <div class="mb-3 col">

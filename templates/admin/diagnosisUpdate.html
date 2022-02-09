@@ -6,7 +6,6 @@
     </div>
     <div class="card-body">
         <form action="{{diagnosis[0]}} {{diagnosis[1]}} {{diagnosis[2]}}" method="post" autocomplete="off">
-            <div class="form-text">{{ msg }}</div>
             <div class="mb-3">
                 <label for="mailId" class="form-label">Patient Id</label>
                 <input type="email" name="mailId" placeholder="Enter Email ID" class="form-control" value="{{diagnosis[0]}}" id="mailId" required disabled>

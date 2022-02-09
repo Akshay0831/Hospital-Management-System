@@ -23,12 +23,13 @@ nav .container-fluid{
   background-color: rgba(25, 135, 84, 0.1)
 }
 .btn-warning{
+  border-color: black;
+}
+.d-grid .btn-warning{
   border-color: #198754;
 }
 .btn-danger{
-  border-color: #198754;
-  background-color: #f86977;
-  color: black;
+  border-color: black;
 }
 .btn-primary{
   background-color: #198754;

@@ -7,17 +7,17 @@ USE hospital;
 
 DROP TABLE IF EXISTS admin;
 CREATE TABLE `admin` (
-  `mailId` varchar(20) NOT NULL,
-  `passwd` varchar(20) DEFAULT NULL,
-  `adminName` varchar(20) DEFAULT NULL,
+  `mailId` varchar(30) NOT NULL,
+  `passwd` varchar(30) DEFAULT NULL,
+  `adminName` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`mailId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS appointment;
 CREATE TABLE `appointment` (
-  `mailId` varchar(20) NOT NULL,
+  `mailId` varchar(30) NOT NULL,
   `appointmentDate` date NOT NULL,
-  `docMailId` varchar(20) NOT NULL,
+  `docMailId` varchar(30) NOT NULL,
   PRIMARY KEY (`mailId`,`appointmentDate`,`docMailId`),
   KEY `docMailId` (`docMailId`),
   CONSTRAINT `appointment_ibfk_1` FOREIGN KEY (`mailId`) REFERENCES `patient` (`mailId`) ON DELETE CASCADE,
@@ -26,7 +26,7 @@ CREATE TABLE `appointment` (
 
 DROP TABLE IF EXISTS diagnosis;
 CREATE TABLE `diagnosis` (
-  `mailId` varchar(20) NOT NULL,
+  `mailId` varchar(30) NOT NULL,
   `testId` int NOT NULL,
   `testDate` date NOT NULL,
   `analysis` text,
@@ -38,8 +38,8 @@ CREATE TABLE `diagnosis` (
 
 DROP TABLE IF EXISTS doctor;
 CREATE TABLE `doctor` (
-  `docMailId` varchar(20) NOT NULL,
-  `passwd` varchar(20) NOT NULL,
+  `docMailId` varchar(30) NOT NULL,
+  `passwd` varchar(30) NOT NULL,
   `docName` varchar(30) NOT NULL,
   `sex` char(1) NOT NULL,
   PRIMARY KEY (`docMailId`)
@@ -47,7 +47,7 @@ CREATE TABLE `doctor` (
 
 DROP TABLE IF EXISTS dosage;
 CREATE TABLE `dosage` (
-  `mailId` varchar(20) NOT NULL,
+  `mailId` varchar(30) NOT NULL,
   `medicineId` int NOT NULL,
   `quantity` decimal(4,0) NOT NULL,
   `doseDate` date NOT NULL,
@@ -66,16 +66,16 @@ CREATE TABLE `medicine` (
 
 DROP TABLE IF EXISTS nurse;
 CREATE TABLE `nurse` (
-  `nurseId` varchar(20) NOT NULL,
-  `nurseName` varchar(20) NOT NULL,
+  `nurseId` varchar(30) NOT NULL,
+  `nurseName` varchar(30) NOT NULL,
   `phoneNumber` decimal(10,0) NOT NULL,
   PRIMARY KEY (`nurseId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS nursealloc;
 CREATE TABLE `nursealloc` (
-  `nurseId` varchar(20) NOT NULL,
-  `mailId` varchar(20) NOT NULL,
+  `nurseId` varchar(30) NOT NULL,
+  `mailId` varchar(30) NOT NULL,
   `dateIn` date NOT NULL,
   `dateOut` date DEFAULT NULL,
   PRIMARY KEY (`mailId`,`dateIn`),
@@ -86,8 +86,8 @@ CREATE TABLE `nursealloc` (
 
 DROP TABLE IF EXISTS patient;
 CREATE TABLE `patient` (
-  `mailId` varchar(20) NOT NULL,
-  `passwd` varchar(20) NOT NULL,
+  `mailId` varchar(30) NOT NULL,
+  `passwd` varchar(30) NOT NULL,
   `Pname` varchar(30) NOT NULL,
   `dob` date NOT NULL,
   `bloodGroup` varchar(3) NOT NULL,
@@ -98,9 +98,9 @@ CREATE TABLE `patient` (
 DROP TABLE IF EXISTS record;
 CREATE TABLE `record` (
   `recordId` int NOT NULL AUTO_INCREMENT,
-  `mailId` varchar(20) NOT NULL,
+  `mailId` varchar(30) NOT NULL,
   `Analysis` text,
-  `docMailId` varchar(20) NOT NULL,
+  `docMailId` varchar(30) NOT NULL,
   PRIMARY KEY (`recordId`),
   KEY `mailId` (`mailId`),
   KEY `docMailId` (`docMailId`),
@@ -111,28 +111,28 @@ CREATE TABLE `record` (
 DROP TABLE IF EXISTS test;
 CREATE TABLE `test` (
   `testId` int NOT NULL AUTO_INCREMENT,
-  `testName` varchar(20) NOT NULL,
-  `testCategory` varchar(20) DEFAULT NULL,
+  `testName` varchar(30) NOT NULL,
+  `testCategory` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`testId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO admin(mailId,passwd,adminName) VALUES('a1@gmail.com','0000','Pushpa'),('a2@gmail.com','0000','Rocky'),('a3@gmail.com','0000','Ram');
+INSERT INTO admin(mailId,passwd,adminName) VALUES('a1@hsptl.com','0000','Pushpa'),('a2@hsp.com','0000','Rocky'),('a3@hsptl.com','0000','Ram');
 
-INSERT INTO appointment(mailId,appointmentDate,docMailId) VALUES('1@gmail.com','2022-03-12','dr1@gmail.com'),('1@gmail.com','2022-04-01','dr2@gmail.com'),('a@gmail.com','2022-02-12','dr2@gmail.com');
+INSERT INTO appointment(mailId,appointmentDate,docMailId) VALUES('1@hsptl.com','2022-03-12','dr1@hsptl.com'),('1@hsptl.com','2022-04-01','dr2@hsptl.com'),('a@hsptl.com','2022-02-12','dr2@hsptl.com');
 
-INSERT INTO diagnosis(mailId,testId,testDate,analysis) VALUES('0@gmail.com',1,'2022-02-04',X'50617469656e74206d617920657870657269656e63652074697265646e6573732c206661696e74696e6720616e64206d617920676574206672657175656e74206d79677261696e65732064756520746f206c6f776572207175616e746974696573206f66206861656d6f676c6f62696e2e205265636f6d6d656e6420746f2074616b652069726f6e20737570706c656d656e7473'),('1@gmail.com',3,'2022-02-06',X'412053747265737320467261637475726520697320666f756e64206174206d6964646c65206f66207468652066656d75722e2053696e636520746865206672616374757265206973206e6f74207365766572652063617374206d6179206e6f7420626520726571756972656420627574207468652070617469656e74206d7573742072656d61696e2063617574696f75732e');
+INSERT INTO diagnosis(mailId,testId,testDate,analysis) VALUES('0@hsptl.com',1,'2022-02-04',X'50617469656e74206d617920657870657269656e63652074697265646e6573732c206661696e74696e6720616e64206d617920676574206672657175656e74206d79677261696e65732064756520746f206c6f776572207175616e746974696573206f66206861656d6f676c6f62696e2e205265636f6d6d656e6420746f2074616b652069726f6e20737570706c656d656e7473'),('1@hsptl.com',3,'2022-02-06',X'412053747265737320467261637475726520697320666f756e64206174206d6964646c65206f66207468652066656d75722e2053696e636520746865206672616374757265206973206e6f74207365766572652063617374206d6179206e6f7420626520726571756972656420627574207468652070617469656e74206d7573742072656d61696e2063617574696f75732e');
 
-INSERT INTO doctor(docMailId,passwd,docName,sex) VALUES('dr1@gmail.com','0000','Preethi','F'),('dr2@gmail.com','0000','Shreesha','M'),('dr3@gmail.com','0000','Varun','M'),('dr4@gmail.com','0000','Suhas','M'),('dr5@gmail.com','0000','Jessie','F'),('dr6@gmail.com','0000','James','M'),('dr7@gmail.com','0000','Norn','F'),('dr8@gmail.com','0000','Naveen','M'),('pk@gmail.com','0000','Prajwal Kulkarni','M');
+INSERT INTO doctor(docMailId,passwd,docName,sex) VALUES('dr1@hsptl.com','0000','Preethi','F'),('dr2@hsptl.com','0000','Shreesha','M'),('dr3@hsptl.com','0000','Varun','M'),('dr4@hsptl.com','0000','Suhas','M'),('dr5@hsptl.com','0000','Jessie','F'),('dr6@hsptl.com','0000','James','M'),('dr7@hsptl.com','0000','Norn','F'),('dr8@hsptl.com','0000','Naveen','M'),('pk@hsptl.com','0000','Prajwal Kulkarni','M');
 
-INSERT INTO dosage(mailId,medicineId,quantity,doseDate) VALUES('0@gmail.com',4,50,'2022-02-04'),('1@gmail.com',8,100,'2022-02-06');
+INSERT INTO dosage(mailId,medicineId,quantity,doseDate) VALUES('0@hsptl.com',4,50,'2022-02-04'),('1@hsptl.com',8,100,'2022-02-06');
 
 INSERT INTO medicine(medicineId,medicineName) VALUES(1,'Phenolphatline'),(2,'Paracetomal'),(3,'Lysonamic'),(4,'Aquathacin'),(5,'Amioramine'),(6,'Caffeicor'),(7,'Fragnuma'),(8,'Vitrarabine');
 
 INSERT INTO nurse(nurseId,nurseName,phoneNumber) VALUES('n0@hp.com','Manasa',9247775899),('n1@hp.com','Anagha',9246665899),('n2@hp.com','Jothi',9245555899),('n3@hp.com','Emily',9244445899),('n4@hp.com','Shivani',9241115899),('n5@hp.com','Dia',9274775899),('n6@hp.com','Demetria',9249975899),('n7@hp.com','Sabina',9247775999);
 
-INSERT INTO nursealloc(nurseId,mailId,dateIn,dateOut) VALUES('n0@hp.com','0@gmail.com','2022-02-06','2022-02-18'),('n1@hp.com','1@gmail.com','2022-02-09','2022-02-19');
+INSERT INTO nursealloc(nurseId,mailId,dateIn,dateOut) VALUES('n0@hp.com','0@hsptl.com','2022-02-06','2022-02-18'),('n1@hp.com','1@hsptl.com','2022-02-09','2022-02-19');
 
-INSERT INTO patient(mailId,passwd,Pname,dob,bloodGroup,sex) VALUES('0@gmail.com','0000','Abhay','1988-09-05','O+','M'),('1@gmail.com','0000','John','1995-11-14','O+','M'),('2@gmail.com','0000','Dubravka','1998-06-26','B+','M'),('3@gmail.com','0000','Fabio','2007-05-22','O+','F'),('4@gmail.com','0000','Freddy','2007-05-22','O+','M'),('5@gmail.com','0000','Roxy','1972-11-04','AB+','F'),('6@gmail.com','0000','Rohan','1977-10-18','B+','M'),('7@gmail.com','0000','Arjun','1975-10-15','A+','M'),('8@gmail.com','0000','Ajay','1976-11-27','O+','M'),('9@gmail.com','0000','Sankalp','1983-11-08','O+','F'),('a@gmail.com','0000','Shaan','1988-12-10','O+','F');
+INSERT INTO patient(mailId,passwd,Pname,dob,bloodGroup,sex) VALUES('0@hsptl.com','0000','Abhay','1988-09-05','O+','M'),('1@hsptl.com','0000','John','1995-11-14','O+','M'),('2@hsptl.com','0000','Dubravka','1998-06-26','B+','M'),('3@hsptl.com','0000','Fabio','2007-05-22','O+','F'),('4@hsptl.com','0000','Freddy','2007-05-22','O+','M'),('5@hsptl.com','0000','Roxy','1972-11-04','AB+','F'),('6@hsptl.com','0000','Rohan','1977-10-18','B+','M'),('7@hsptl.com','0000','Arjun','1975-10-15','A+','M'),('8@hsptl.com','0000','Ajay','1976-11-27','O+','M'),('9@hsptl.com','0000','Sankalp','1983-11-08','O+','F'),('a@hsptl.com','0000','Shaan','1988-12-10','O+','F');
 
-INSERT INTO record(recordId,mailId,Analysis,docMailId) VALUES(1,'0@gmail.com',X'5468652050617469656e742069732066696e65','dr1@gmail.com'),(2,'1@gmail.com',X'5468652050617469656e7420506879736963616c6c792066696e652c206275742072657175697265732070737963686f6c6f676963616c2074686572617079','dr2@gmail.com');
+INSERT INTO record(recordId,mailId,Analysis,docMailId) VALUES(1,'0@hsptl.com',X'5468652050617469656e742069732066696e65','dr1@hsptl.com'),(2,'1@hsptl.com',X'5468652050617469656e7420506879736963616c6c792066696e652c206275742072657175697265732070737963686f6c6f676963616c2074686572617079','dr2@hsptl.com');
 INSERT INTO test(testId,testName,testCategory) VALUES(1,'Haemoglobin','Blood'),(2,'Cranium','CT'),(3,'Femur','X-Ray'),(4,'Brain Scan','MRI'),(5,'Sugar','Blood');

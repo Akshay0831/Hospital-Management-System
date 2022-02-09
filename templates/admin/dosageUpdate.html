@@ -6,7 +6,6 @@
     </div>
     <div class="card-body">
         <form action="{{appointment[0]}} {{appointment[1]}} {{appointment[3]}}" method="post" autocomplete="off">
-            <div class="form-text">{{ msg }}</div>
             <div class="mb-3">
                 <label for="mailId" class="form-label">Patient Id</label>
                 <input type="email" name="mailId" placeholder="Enter Email ID" class="form-control" value="{{appointment[0]}}" id="mailId" required disabled>
@@ -17,7 +16,7 @@
             </div>
             <div class="mb-3">
                 <label for="quantity" class="form-label">Quantity</label>
-                <input type="number" name="quantity" placeholder="Enter Quantity" class="form-control" value="{{appointment[2]}}" id="medicineId" required>
+                <input type="number" name="quantity" placeholder="Enter Quantity" class="form-control" min="1" max="5000" value="{{appointment[2]}}" id="medicineId" required>
             </div>
             <div class="mb-3">
                 <label for="doseDate" class="form-label">Dosage Date</label>
