@@ -22,9 +22,9 @@
                         <td>{{appointment[4]}}</td>
                         <td>
                             {% if loggedIn==3 %}
-                            <a href="/appointmentUpdate/{{appointment[0]}} {{appointment[2]}} {{appointment[4]}}" class="btn btn-warning">Update</a>
+                            <a href="/appointmentUpdate/{{appointment[0]}} {{appointment[4]}} {{appointment[2]}}" class="btn btn-warning">Update</a>
                             {% endif %}
-                            <a href="/appointmentDelete/{{appointment[0]}} {{appointment[2]}} {{appointment[4]}}" class="btn btn-danger">{{'Delete' if loggedIn==3 else 'Cancel'}}</a>
+                            <a href="/appointmentDelete/{{appointment[0]}} {{appointment[4]}} {{appointment[2]}}" class="btn btn-danger">{{'Delete' if loggedIn==3 else 'Cancel'}}</a>
                         </td>
                     </tr>
                     {% endfor %}

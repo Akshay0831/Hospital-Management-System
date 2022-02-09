@@ -344,16 +344,11 @@ def nurseAllocAdd():
             nurseId = request.form['nurseId']
             dateIn = request.form['dateIn']
             dateOut = request.form['dateOut']
-            cursor.execute(f'''SELECT * FROM nursealloc WHERE mailId = '{mailId}' OR nurseId='{nurseId}' AND dateIn<='{dateIn}' AND dateOut>='{dateOut}' ''')
-            allocation = cursor.fetchone()
-            if allocation:
-                msg = 'Nurse already allocated!'
-            else:
-                try:
-                    cursor.execute(f'''INSERT INTO nursealloc VALUES('{nurseId}','{mailId}','{dateIn}','{dateOut}') ''')
-                    msg="successfully allocated nurse"
-                except:
-                    msg='invalid entry'
+            try:
+                cursor.execute(f'''INSERT INTO nursealloc VALUES('{nurseId}','{mailId}','{dateIn}','{dateOut}') ''')
+                msg="successfully allocated nurse"
+            except mysql.connector.Error as err:
+                msg=str(err)
         cursor.execute(f'''SELECT nurseId, nurseName FROM nurse ''')
         nurses = cursor.fetchall()
         cursor.execute(f'''SELECT mailId, Pname FROM patient ''')
@@ -420,8 +415,11 @@ def appointmentAdd():
             if appointment:
                 msg="Appointment already exists"
             else:
-                cursor.execute('INSERT INTO appointment VALUES(%s,%s,%s)',(mailId, appointmentDate, docMailId))
-                return redirect(url_for('appointments'))
+                try:
+                    cursor.execute('CALL checkAppointment(%s,%s,%s)',(docMailId, mailId, appointmentDate))
+                    return redirect(url_for('appointments'))    
+                except mysql.connector.Error as err:
+                    msg=err
         cursor.execute(f'''SELECT docMailId, docName FROM doctor ''')
         doctors = cursor.fetchall()
         if session['loggedIn']==3:
