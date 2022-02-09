@@ -116,6 +116,17 @@ CREATE TABLE `test` (
   PRIMARY KEY (`testId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+DELIMITER $$
+CREATE TRIGGER CheckNurseAllocAdd BEFORE INSERT ON nursealloc
+FOR EACH ROW
+BEGIN
+IF EXISTS(SELECT * FROM nursealloc WHERE mailId = NEW.mailId OR nurseId=NEW.nurseId AND dateIn<=NEW.dateIn AND dateOut>=NEW.dateOut) THEN
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'ERROR: Nurse Already Allocatied!';
+END IF;
+END; $$
+DELIMITER ;
+
 CREATE OR REPLACE VIEW `v_detailedrecords` AS select `r`.`recordId` AS `recordId`,`p`.`Pname` AS `Pname`,`r`.`mailId` AS `mailId`,`d`.`docName` AS `docName`,`r`.`docMailId` AS `docMailId`,`r`.`Analysis` AS `Analysis` from ((`record` `r` join `doctor` `d`) join `patient` `p`) where ((`r`.`docMailId` = `d`.`docMailId`) and (`r`.`mailId` = `p`.`mailId`));
 
 CREATE OR REPLACE VIEW `v_detailedappointments` AS select `a`.`mailId` AS `mailId`,`p`.`Pname` AS `Pname`,`a`.`docMailId` AS `docMailId`,`d`.`docName` AS `docName`,`a`.`appointmentDate` AS `appointmentDate` from ((`appointment` `a` join `patient` `p`) join `doctor` `d`) where ((`a`.`mailId` = `p`.`mailId`) and (`d`.`docMailId` = `a`.`docMailId`));
