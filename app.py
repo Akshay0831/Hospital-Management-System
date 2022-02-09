@@ -13,8 +13,8 @@ db = mysql.connector.connect(
     autocommit=True
 )
 
-
 cursor = db.cursor(buffered=True)
+
 
 @app.route("/")
 def redirectPg():
@@ -106,40 +106,24 @@ def update():
         return render_template("update.html", loggedIn=session['loggedIn'], patient = patient, msg = msg)
     return redirect(url_for('login'))
 
-@app.route('/adminLogin',methods=['GET','POST'])
-def adminLogin():
-    msg='Enter Login Credentials'
-    if request.method=='POST' and 'mailId' in request.form and 'passwd' in request.form:
-        mailId=request.form['mailId']
-        passwd = request.form['passwd']
-        cursor.execute(f'''SELECT * FROM admin WHERE mailId = '{mailId}' and passwd= '{passwd}' ''')
-        admin=cursor.fetchone()
-        if admin:
-            session['loggedIn'] = 3
-            session['mailId'] = admin[0]
-            return redirect(url_for('patients'))
-        else:
-            msg = 'Incorrect username / password !'
-    return render_template('admin/adminLogin.html', msg = msg)
-
-@app.route('/adminRegister', methods =['GET','POST'])
-def adminRegister():
-    msg = ''
-    if request.method == 'POST' and 'mailId' in request.form and 'passwd' in request.form and 'adminName' in request.form :
-        mailId = request.form['mailId']
-        passwd = request.form['passwd']
-        adminName = request.form['adminName']
-        cursor.execute(f'''SELECT * FROM admin WHERE mailId = '{mailId}' ''')
-        receptionist = cursor.fetchone()
-        if receptionist:
-            msg = 'Account already exists !'
-        else:
-            cursor.execute('INSERT INTO receptionist VALUES (% s, % s, % s)', (mailId, passwd, adminName))
-            msg = 'You have successfully registered !'
-            return redirect(url_for('patients'))
-    else:
-        msg = 'Please fill out the form !'
-    return render_template('admin/adminRegister.html', msg = msg)
+# @app.route('/adminRegister', methods =['GET','POST'])
+# def adminRegister():
+#     msg = ''
+#     if request.method == 'POST' and 'mailId' in request.form and 'passwd' in request.form and 'adminName' in request.form :
+#         mailId = request.form['mailId']
+#         passwd = request.form['passwd']
+#         adminName = request.form['adminName']
+#         cursor.execute(f'''SELECT * FROM admin WHERE mailId = '{mailId}' ''')
+#         receptionist = cursor.fetchone()
+#         if receptionist:
+#             msg = 'Account already exists !'
+#         else:
+#             cursor.execute('INSERT INTO receptionist VALUES (% s, % s, % s)', (mailId, passwd, adminName))
+#             msg = 'You have successfully registered !'
+#             return redirect(url_for('patients'))
+#     else:
+#         msg = 'Please fill out the form !'
+#     return render_template('admin/adminRegister.html', msg = msg)
 
 @app.route("/adminDisplay")
 def adminDisplay():
@@ -170,21 +154,6 @@ def adminUpdate():
         return render_template("admin/adminUpdate.html", loggedIn = session['loggedIn'], admin=admin,  msg = msg)
     return redirect(url_for('adminLogin'))
 
-@app.route('/doctorLogin',methods=['GET','POST'])
-def doctorLogin():
-    msg=''
-    if request.method=='POST' and 'docMailId' in request.form and 'passwd' in request.form:
-        docMailId=request.form['docMailId']
-        passwd = request.form['passwd']
-        cursor.execute(f'''SELECT * FROM doctor WHERE docMailId = '{docMailId}' and passwd= '{passwd}' ''')
-        doctor=cursor.fetchone()
-        if doctor:
-            session['loggedIn'] = 2
-            session['mailId'] = doctor[0]
-            return redirect(url_for('doctorDisplay'))
-        msg = 'Incorrect mail-id or password !'
-    return render_template('doctorLogin.html', msg = msg)
-
 @app.route("/doctorDisplay")
 def doctorDisplay():
     if 'loggedIn' in session:
@@ -200,28 +169,6 @@ def myRecords():
         records = cursor.fetchall()
         return render_template("patientRecord.html", loggedIn=session['loggedIn'], record = records)
     return redirect(url_for('login'))
-
-@app.route("/patientRecord",methods=['GET','POST'])
-def patientRecord():
-    if 'loggedIn' in session:
-        cursor.execute(f'''SELECT * FROM record WHERE mailId = '{session['patMailId']}' ''')
-        record=cursor.fetchall()
-        return render_template("patientRecord.html", loggedIn=session['loggedIn'], record=record)
-    return redirect(url_for('home'))
-
-@app.route("/docAppointments",methods=['GET','POST'])
-def docAppointments():
-    if 'loggedIn' in session:
-        docMailId = True
-        cursor.execute(f'''SELECT * FROM appointment WHERE docMailId = '{docMailId}' ''')
-        appoint=cursor.fetchall()
-        return render_template("docAppointments.html", appoint=appoint)
-    return redirect(url_for('home'))
-
-@app.route("/doctorsList",methods=['GET','POST'])
-def doctorsList():
-    cursor.execute('SELECT docMailId, docName, availableDate FROM doctor')
-    return render_template('doctorsList.html', doctors = cursor.fetchall(), loggedIn=session['loggedIn'] if 'loggedIn' in session else None)
 
 @app.route("/doctorUpdate", methods =['GET', 'POST'])
 def doctorUpdate():
@@ -489,9 +436,9 @@ def appointments():
     if 'loggedIn' not in session:
         return redirect(url_for('home'))
     if session['loggedIn']==3:
-        cursor.execute(f'''SELECT * FROM appointment ''')
+        cursor.execute(f'''SELECT * FROM v_detailedAppointments ''')
     else:
-        cursor.execute(f'''SELECT * FROM appointment WHERE {'mailId' if session['loggedIn']==1 else 'docMailId'} = '{session['mailId']}' ''')
+        cursor.execute(f'''SELECT * FROM v_detailedAppointments WHERE {'mailId' if session['loggedIn']==1 else 'docMailId'} = '{session['mailId']}' ''')
     appointments=cursor.fetchall()
     return render_template("admin/appointments.html", loggedIn=session['loggedIn'], appointments=appointments)
 
