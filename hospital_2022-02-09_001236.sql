@@ -118,6 +118,8 @@ CREATE TABLE `test` (
 
 CREATE OR REPLACE VIEW `v_detailedrecords` AS select `r`.`recordId` AS `recordId`,`p`.`Pname` AS `Pname`,`r`.`mailId` AS `mailId`,`d`.`docName` AS `docName`,`r`.`docMailId` AS `docMailId`,`r`.`Analysis` AS `Analysis` from ((`record` `r` join `doctor` `d`) join `patient` `p`) where ((`r`.`docMailId` = `d`.`docMailId`) and (`r`.`mailId` = `p`.`mailId`));
 
+CREATE OR REPLACE VIEW `v_detailedappointments` AS select `a`.`mailId` AS `mailId`,`p`.`Pname` AS `Pname`,`a`.`docMailId` AS `docMailId`,`d`.`docName` AS `docName`,`a`.`appointmentDate` AS `appointmentDate` from ((`appointment` `a` join `patient` `p`) join `doctor` `d`) where ((`a`.`mailId` = `p`.`mailId`) and (`d`.`docMailId` = `a`.`docMailId`));
+
 INSERT INTO admin(mailId,passwd,adminName) VALUES('a1@hsptl.com','0000','Pushpa'),('a2@hsp.com','0000','Rocky'),('a3@hsptl.com','0000','Ram');
 
 INSERT INTO appointment(mailId,appointmentDate,docMailId) VALUES('1@hsptl.com','2022-03-12','dr1@hsptl.com'),('1@hsptl.com','2022-04-01','dr2@hsptl.com');

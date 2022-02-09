@@ -82,29 +82,9 @@ def display():
         return render_template("display.html", loggedIn=session['loggedIn'], patient = patient)
     return redirect(url_for('login'))
 
-@app.route("/update", methods =['GET', 'POST'])
+@app.route("/update")
 def update():
-    msg = ''
-    if 'loggedIn' in session:
-        if request.method == 'POST':
-            mailId = request.form['mailId']
-            passwd = request.form['passwd']
-            PName = request.form['PName']
-            dob = request.form['dob']
-            bloodGroup = request.form['bloodGroup']
-            sex = request.form['sex']
-            cursor.execute(f'''SELECT * FROM patient WHERE mailId = '{mailId}' ''')
-            patient = cursor.fetchone()
-            if patient:
-                msg = 'Mail-Id already in use!'
-            else:
-                cursor.execute(f'''UPDATE patient SET  mailId = '{mailId}', passwd = '{passwd}', PName = '{PName}', dob = '{dob}', bloodGroup = '{bloodGroup}', sex = '{sex}'  WHERE mailId = '{session['mailId']}' ''')
-                msg = 'You have successfully updated !'
-        else:
-            cursor.execute(f'''SELECT * FROM patient WHERE mailId = '{session['mailId']}' ''')
-            patient = cursor.fetchone()
-        return render_template("update.html", loggedIn=session['loggedIn'], patient = patient, msg = msg)
-    return redirect(url_for('login'))
+    return redirect('/patientUpdate/'+session['mailId'])
 
 # @app.route('/adminRegister', methods =['GET','POST'])
 # def adminRegister():
@@ -170,27 +150,9 @@ def myRecords():
         return render_template("patientRecord.html", loggedIn=session['loggedIn'], record = records)
     return redirect(url_for('login'))
 
-@app.route("/doctorUpdate", methods =['GET', 'POST'])
+@app.route("/doctorUpdate")
 def doctorUpdate():
-    msg = ''
-    if 'loggedIn' not in session or session['loggedIn']<2:
-        return redirect(url_for('home'))
-    if request.method == 'POST':
-        docMailId = request.form['docMailId']
-        docName=request.form['docName']
-        passwd = request.form['passwd']
-        availableDate = request.form['availableDate']
-        cursor.execute(f'''SELECT * FROM doctor WHERE docMailId = '{docMailId}' ''')
-        doctor = cursor.fetchone()
-        if not doctor:
-            msg = 'Account already exists !'
-        else:
-            cursor.execute(f'''UPDATE doctor SET  docMailId = '{docMailId}', passwd = '{passwd}', docName = '{docName}',availaibleDate= '{availableDate}' WHERE docMailId = '{session['mailId']}' ''')
-            msg = 'You have successfully updated !'
-    else:
-        cursor.execute(f'''SELECT * FROM doctor WHERE docMailId = '{session['mailId']}' ''')
-        doctor = cursor.fetchone()
-    return render_template("admin/doctorUpdate.html", loggedIn = session['loggedIn'], doctor=doctor, msg = msg)
+    return redirect('/doctorUpdate/'+session['mailId'])
 
 @app.route("/patients", methods=['GET', 'POST'])
 def patients():
@@ -222,7 +184,7 @@ def patientAdd():
 
 @app.route("/patientUpdate/<patMailId>", methods=['GET', 'POST'])
 def patientUpdate(patMailId):
-    if 'loggedIn' not in session or session['loggedIn']!=3:
+    if 'loggedIn' not in session:
         return redirect(url_for('home'))
     msg = ''
     if request.method == 'POST':
